@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khanh Vy — Video Editor Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pink: #FF6B9D;
+  --pink-light: #FFB3CE;
+  --pink-pale: #FFF0F3;
+  --pink-pale2: #FFE4EC;
+  --dark: #1A1A1A;
+  --gray: #888;
+  --gray-light: #F8F8F8;
+  --border: #F0F0F0;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: #fff;
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.nav-logo { font-weight: 700; font-size: 15px; color: var(--dark); }
+.nav-logo span { color: var(--pink); }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--pink); }
+.nav-cta { background: var(--pink); color: #fff !important; padding: 7px 18px; border-radius: 99px; font-size: 13px; font-weight: 600; }
+.nav-cta:hover { background: #e85888; color: #fff; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(160deg, #fff 0%, var(--pink-pale) 50%, var(--pink-pale2) 100%);
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(255,107,157,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,107,157,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: var(--pink-pale2);
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 99px;
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+.hero h1 .accent { color: var(--pink); }
+.hero-sub {
+  font-size: 1.05rem;
+  color: #666;
+  margin-bottom: 2rem;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.hero-tag {
+  background: #fff;
+  border: 1px solid var(--pink-light);
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 16px;
+  border-radius: 99px;
+}
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--pink);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+.btn-primary:hover { background: #e85888; transform: translateY(-1px); }
+.btn-outline {
+  background: #fff;
+  color: var(--pink);
+  border: 1.5px solid var(--pink);
+  padding: 12px 28px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.btn-outline:hover { background: var(--pink-pale); transform: translateY(-1px); }
+
+/* STATS */
+.stats-section {
+  padding: 3rem 2rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+.stat-card {
+  background: var(--pink-pale);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--pink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label { font-size: 13px; color: var(--gray); }
+
+.divider { height: 1px; background: var(--border); margin: 0 2rem; }
+
+/* PORTFOLIO */
+.portfolio-section {
+  padding: 3rem 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.section-header { margin-bottom: 1.75rem; }
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 0.4rem;
+}
+.section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+.section-sub { font-size: 13px; color: var(--gray); }
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.filter-btn {
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  color: #555;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 18px;
+  border-radius: 99px;
+  cursor: pointer;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--pink-light); color: var(--pink); }
+.filter-btn.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+.video-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(255,107,157,0.13);
+  border-color: var(--pink-light);
+}
+.thumb-wrap {
+  position: relative;
+  aspect-ratio: 16/9;
+  background: var(--pink-pale2);
+  overflow: hidden;
+}
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.thumb-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.92;
+}
+.thumb-placeholder .ph-icon {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  font-size: 80px;
+  line-height: 1;
+  opacity: 0.13;
+  pointer-events: none;
+  filter: grayscale(0.2);
+}
+.thumb-placeholder .ph-label {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 4px;
+}
+.thumb-placeholder .ph-title {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  max-width: 85%;
+}
+.thumb-placeholder .ph-dots {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  gap: 5px;
+  z-index: 1;
+}
+.thumb-placeholder .ph-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+}
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,107,157,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.video-card:hover .play-overlay { opacity: 1; }
+.play-circle {
+  width: 48px;
+  height: 48px;
+  background: rgba(255,107,157,0.88);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.play-circle svg { fill: #fff; width: 20px; height: 20px; margin-left: 3px; }
+.external-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+}
+.card-body { padding: 14px 16px 16px; }
+.card-badge {
+  display: inline-block;
+  background: var(--pink-pale);
+  color: var(--pink);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-bottom: 7px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.card-title { font-size: 14px; font-weight: 600; color: var(--dark); line-height: 1.4; margin-bottom: 4px; }
+.card-desc { font-size: 12px; color: var(--gray); line-height: 1.45; }
+
+/* ABOUT */
+.about-section {
+  background: var(--pink-pale);
+  padding: 3.5rem 2rem;
+}
+.about-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.about-text .section-eyebrow { margin-bottom: 0.5rem; }
+.about-text h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.25; }
+.about-text p { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 0.75rem; }
+.service-list { display: flex; flex-direction: column; gap: 10px; }
+.service-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--border);
+}
+.service-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--pink-pale2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.service-icon svg { width: 18px; height: 18px; stroke: var(--pink); fill: none; stroke-width: 1.8; }
+.service-name { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+.service-desc { font-size: 12px; color: var(--gray); }
+
+/* CONTACT */
+.contact-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #fff;
+}
+.contact-section h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+.contact-section h2 span { color: var(--pink); }
+.contact-section p { font-size: 14px; color: #666; margin-bottom: 2rem; }
+.contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  transition: all 0.2s;
+}
+.contact-btn svg { width: 18px; height: 18px; }
+.btn-zalo { background: #0068FF; color: #fff; }
+.btn-zalo:hover { background: #0056d6; transform: translateY(-1px); }
+.btn-fb { background: #1877F2; color: #fff; }
+.btn-fb:hover { background: #1467d8; transform: translateY(-1px); }
+.btn-email { background: #fff; color: var(--pink); border: 1.5px solid var(--pink); }
+.btn-email:hover { background: var(--pink-pale); transform: translateY(-1px); }
+
+/* FOOTER */
+footer {
+  background: var(--dark);
+  color: #aaa;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 12px;
+}
+footer span { color: var(--pink); }
+
+/* LIGHTBOX */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.lightbox.open { display: flex; }
+.lb-inner {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 740px;
+  position: relative;
+  animation: lb-in 0.22s ease;
+}
+@keyframes lb-in { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
+.lb-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+  font-size: 18px;
+  line-height: 1;
+}
+.lb-video { aspect-ratio: 16/9; width: 100%; background: #000; }
+.lb-video iframe { width: 100%; height: 100%; border: none; display: block; }
+.lb-info { padding: 16px 20px 20px; }
+.lb-badge {
+  display: inline-block;
+  background: var(--pink-pale);
+  color: var(--pink);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 99px;
+  margin-bottom: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.lb-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.lb-desc { font-size: 13px; color: #666; }
+
+@media (max-width: 640px) {
+  .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+  nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  .hero { padding: 3.5rem 1.25rem 3rem; }
+  .portfolio-section, .stats-section { padding: 2.5rem 1.25rem; }
+  .video-grid { grid-template-columns: 1fr; }
+}
+
+.lb-message {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.65;
+  margin: 8px 0 14px;
+  font-style: italic;
+  border-left: 3px solid var(--pink-light);
+  padding-left: 12px;
+}
+.lb-process-wrap { margin-bottom: 14px; }
+.lb-process-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+.lb-process-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.lb-step {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+}
+.lb-step-dot {
+  width: 22px;
+  height: 22px;
+  background: var(--pink-pale);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--pink);
+  flex-shrink: 0;
+}
+.lb-step-arrow { color: var(--pink-light); font-size: 12px; }
+.lb-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.lb-tag {
+  background: var(--gray-light);
+  color: #666;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+}
+.lb-info { padding: 16px 20px 20px; max-height: 280px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Khanh<span>Vy</span></div>
+  <div class="nav-links">
+    <a href="#works">Portfolio</a>
+    <a href="#about">Dịch vụ</a>
+    <a href="#contact" class="nav-cta">Liên hệ</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Video Editor · Content Creator</div>
+  <h1>Khanh Vy —<br>biến ý tưởng<br>thành <span class="accent">video đáng nhớ.</span></h1>
+  <p class="hero-sub">Chuyên edit hoạt hình AI, podcast giáo dục, teaser, short-form và storytelling thương hiệu.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Hoạt hình AI</span>
+    <span class="hero-tag">Video giáo dục</span>
+    <span class="hero-tag">Teaser</span>
+    <span class="hero-tag">Short quảng cáo</span>
+    <span class="hero-tag">Storytelling</span>
+    <span class="hero-tag">Event recap</span>
+  </div>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Liên hệ đặt lịch</a>
+    <a href="#works" class="btn-outline">Xem portfolio</a>
+  </div>
+</section>
+
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">Video đã thực hiện</div></div>
+    <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Thể loại</div></div>
+    <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Năm kinh nghiệm</div></div>
+    <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Ý tưởng sẵn sàng</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section class="portfolio-section" id="works">
+  <div class="section-header">
+    <div class="section-eyebrow">Portfolio</div>
+    <div class="section-title">Các video đã thực hiện</div>
+    <div class="section-sub">Nhấn vào video để xem ngay trong trang</div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-cat="all">Tất cả</button>
+    <button class="filter-btn" data-cat="hoathinh">Hoạt hình AI</button>
+    <button class="filter-btn" data-cat="podcast">Podcast / Giáo dục</button>
+    <button class="filter-btn" data-cat="teaser">Teaser</button>
+    <button class="filter-btn" data-cat="short">Short</button>
+    <button class="filter-btn" data-cat="quangcao">Quảng cáo</button>
+  </div>
+
+  <div class="video-grid" id="video-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <div class="section-eyebrow">Về mình</div>
+      <h2>Edit video là<br><span style="color:var(--pink)">kể chuyện</span> bằng hình ảnh.</h2>
+      <p>Mình là Khanh Vy — video editor với hơn 2 năm kinh nghiệm trong mảng content giáo dục, thương hiệu và short-form sáng tạo.</p>
+      <p>Từ hoạt hình AI đến teaser ra mắt sản phẩm, mình tập trung vào từng khung hình để đảm bảo video truyền đúng cảm xúc và thông điệp bạn muốn.</p>
+    </div>
+    <div class="service-list">
+      <div class="service-item">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div><div class="service-name">Hoạt hình AI</div><div class="service-desc">Nhân vật, motion, storytelling với AI tools</div></div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        </div>
+        <div><div class="service-name">Podcast & Giáo dục</div><div class="service-desc">Video dài 10–20 phút, edit sạch, caption chuẩn</div></div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div><div class="service-name">Teaser & Short-form</div><div class="service-desc">Hook mạnh, nhịp nhanh, tối ưu cho mọi platform</div></div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div><div class="service-name">Storytelling thương hiệu</div><div class="service-desc">Video cảm xúc, kể chuyện thương hiệu chạm tim</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="section-eyebrow" style="text-align:center; margin-bottom:0.75rem;">Liên hệ</div>
+  <h2>Cùng làm video <span>đáng nhớ</span> nhé?</h2>
+  <p>Mình nhận dự án freelance và hợp tác lâu dài.<br>Inbox để trao đổi yêu cầu và báo giá nhanh nhất.</p>
+  <div class="contact-btns">
+    <a href="https://zalo.me/0365378921" class="contact-btn btn-zalo" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.95 1.54 5.57 3.96 7.28L5 21l3.18-1.58C9.36 19.79 10.66 20 12 20c5.52 0 10-4.03 10-9S17.52 2 12 2zm1 12.5h-2v-5h2v5zm0-7h-2V6h2v1.5z"/></svg>
+      Nhắn Zalo
+    </a>
+    <a href="https://www.facebook.com/chimuonlam.motconcauopmuoi/" class="contact-btn btn-fb" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook
+    </a>
+    <a href="mailto:khanhvytran412@gmail.com" class="contact-btn btn-email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+      Gửi email
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>Khanh Vy</span> · Video Editor & Content Creator · Made with ♥</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-inner">
+    <button class="lb-close" id="lb-close">✕</button>
+    <div class="lb-video"><iframe id="lb-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>
+    <div class="lb-info">
+      <div class="lb-badge" id="lb-badge"></div>
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-message" id="lb-message"></div>
+      <div class="lb-process-wrap" id="lb-process-wrap">
+        <div class="lb-process-label">Quy trình thực hiện</div>
+        <div class="lb-process-steps" id="lb-process-steps"></div>
+      </div>
+      <div class="lb-tags" id="lb-tags"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CAT = {
+  hoathinh: 'Hoạt hình AI',
+  podcast: 'Podcast / Giáo dục',
+  teaser: 'Teaser',
+  short: 'Short',
+  quangcao: 'Quảng cáo'
+};
+
+const VIDEOS = [
+  {
+    title: 'Hoạt hình AI — số 1',
+    cat: 'hoathinh',
+    url: 'https://drive.google.com/file/d/1nQQvRjlM3r2e6C2tHYky4MsHi3xqexuf/view',
+    external: false,
+    message: 'Dùng AI để tạo nhân vật và chuyển động — giúp thương hiệu kể chuyện trực quan mà không cần quay thật, tiết kiệm chi phí nhưng vẫn giữ được cảm xúc và bản sắc riêng.',
+    process: ['Nhận brief & kịch bản', 'Tạo nhân vật AI', 'Dựng hoạt hình', 'Thêm voiceover & nhạc', 'Chỉnh màu & xuất file'],
+    tags: ['AI Animation', 'Motion Design', 'Storytelling', 'Nhân vật']
+  },
+  {
+    title: 'Hoạt hình AI — số 2',
+    cat: 'hoathinh',
+    url: 'https://drive.google.com/file/d/1KWpbHDIRqOoqma53tgLGYrDKfNGgz3iQ/view',
+    external: false,
+    message: 'Mỗi khung hình trong hoạt hình AI đều được chọn lọc để truyền đúng thông điệp — từ biểu cảm nhân vật đến nhịp cắt, tất cả phục vụ cho câu chuyện bạn muốn kể.',
+    process: ['Nhận brief & kịch bản', 'Tạo nhân vật AI', 'Dựng hoạt hình', 'Thêm voiceover & nhạc', 'Chỉnh màu & xuất file'],
+    tags: ['AI Animation', 'Motion Design', 'Storytelling', 'Nhân vật']
+  },
+  {
+    title: 'Podcast giáo dục — tập 1',
+    cat: 'podcast',
+    url: 'https://drive.google.com/file/d/1a3h3SEadojtoQCLtUsmHdzlBTHzuzS2s/view',
+    external: false,
+    message: 'Video giáo dục dài không nhất thiết phải nhàm — cách edit quyết định người xem có ở lại đến cuối hay không. Mình tập trung vào nhịp thở của nội dung, caption rõ và b-roll hỗ trợ đúng lúc.',
+    process: ['Nhận file raw & script', 'Cắt tạp âm & chỉnh tiếng', 'Edit hình & b-roll', 'Caption & đồ họa', 'Xuất đa định dạng'],
+    tags: ['Podcast', 'Giáo dục', 'Long-form', 'Caption', 'B-roll']
+  },
+  {
+    title: 'Podcast giáo dục — tập 2',
+    cat: 'podcast',
+    url: 'https://drive.google.com/file/d/14swQuMAATFp1jLblabk5-vwl-1qEYrIf/view',
+    external: false,
+    message: 'Mỗi tập podcast là một trải nghiệm học hoàn chỉnh — từ mở đầu thu hút đến kết thúc có hành động rõ ràng. Edit không chỉ là cắt ghép, mà là định hình lại cách người xem tiếp thu kiến thức.',
+    process: ['Nhận file raw & script', 'Cắt tạp âm & chỉnh tiếng', 'Edit hình & b-roll', 'Caption & đồ họa', 'Xuất đa định dạng'],
+    tags: ['Podcast', 'Giáo dục', 'Long-form', 'Caption', 'B-roll']
+  },
+  {
+    title: 'Teaser ra mắt sản phẩm',
+    cat: 'teaser',
+    url: 'https://drive.google.com/file/d/12390Zruy8TkOalVxa00fL97R8fuJoFDP/view',
+    external: false,
+    message: '60 giây để tạo ấn tượng đầu tiên — mỗi giây đều có chủ đích. Teaser tốt không cần nói nhiều, chỉ cần khiến người xem muốn biết thêm. Hook mạnh ở 3 giây đầu là yếu tố quyết định.',
+    process: ['Nhận brief & concept', 'Storyboard nhịp nhanh', 'Edit & sound design', 'Motion title & hiệu ứng', 'Xuất cho đa platform'],
+    tags: ['Teaser', 'Ra mắt sản phẩm', 'Hook mạnh', 'Short-form', 'Sound design']
+  },
+  {
+    title: 'Short — Event recap',
+    cat: 'short',
+    url: 'https://drive.google.com/file/d/14lxumlLkeD2NgLmF3VfJAXxGLvLhQmD3/view',
+    external: false,
+    message: 'Sự kiện qua đi, cảm xúc còn lại — video recap giúp khán giả sống lại khoảnh khắc đó và lan tỏa đến người chưa tham dự. Nhịp cắt nhanh, âm nhạc đúng mood là linh hồn của loại video này.',
+    process: ['Nhận footage sự kiện', 'Chọn lọc khoảnh khắc key', 'Edit theo nhịp nhạc', 'Thêm title & lower-third', 'Xuất cho mạng xã hội'],
+    tags: ['Event', 'Recap', 'Reels', 'Cảm xúc', 'Short-form']
+  },
+  {
+    title: 'Short — Marketing khóa học 1',
+    cat: 'short',
+    url: 'https://drive.google.com/file/d/1f3DKPs_rRKwpu-71MpP5Z9lNs3-Mhxp5/view',
+    external: false,
+    message: 'Video marketing khóa học cần làm được 3 việc trong dưới 60 giây: tạo pain point, giới thiệu giải pháp và thúc đẩy hành động. Mỗi giây đều được tính toán để giữ người xem đến CTA cuối.',
+    process: ['Nhận brief & USP khóa học', 'Viết hook & CTA', 'Edit hình & caption', 'Thêm đồ họa sản phẩm', 'Tối ưu cho từng platform'],
+    tags: ['Marketing', 'Khóa học', 'CTA', 'Reels', 'TikTok']
+  },
+  {
+    title: 'Short — Marketing khóa học 2',
+    cat: 'short',
+    url: 'https://drive.google.com/file/d/1PLcpzvG-1fAslX7cu0LLTkt5EL5xq2Xj/view',
+    external: false,
+    message: 'Phiên bản thứ hai — cùng sản phẩm nhưng angle khác. A/B testing content là chiến lược thông minh: cùng ngân sách, nhưng tìm được công thức nào chuyển đổi tốt hơn cho từng tệp khách hàng.',
+    process: ['Nhận brief & USP khóa học', 'Đổi angle & hook mới', 'Edit hình & caption', 'Thêm đồ họa sản phẩm', 'Tối ưu cho từng platform'],
+    tags: ['Marketing', 'A/B Testing', 'Khóa học', 'Reels', 'Conversion']
+  },
+  {
+    title: 'Short — Storytelling thương hiệu',
+    cat: 'short',
+    url: 'https://drive.google.com/file/d/1gKD6H6gVFoc-y-0BWUb2twW1QveXB0Mf/view',
+    external: false,
+    message: 'Thương hiệu không chỉ bán sản phẩm — họ bán câu chuyện và giá trị. Video storytelling cho Văn Ngưu khai thác chiều sâu văn hóa truyền thống, tạo kết nối cảm xúc thật sự với người xem.',
+    process: ['Nghiên cứu brand identity', 'Xây dựng narrative', 'Edit cảm xúc & nhịp thở', 'Nhạc & sound design', 'Tối ưu TikTok & Reels'],
+    tags: ['Storytelling', 'Thương hiệu', 'Văn hóa', 'Cảm xúc', 'TikTok']
+  },
+  {
+    title: 'Quảng cáo sản phẩm',
+    cat: 'quangcao',
+    url: 'https://drive.google.com/file/d/1GEzDzT-P7HTUva1JSFylHbsREWmzxf1S/view',
+    external: false,
+    message: 'Quảng cáo hiệu quả không phải video đẹp nhất — mà là video khiến người xem dừng lại, hiểu sản phẩm và muốn mua. Mình tập trung vào visual hook, trình bày lợi ích rõ ràng và CTA đúng thời điểm.',
+    process: ['Nhận brief & sản phẩm', 'Concept & storyboard', 'Edit visual & âm thanh', 'Đồ họa sản phẩm & text', 'Xuất đa kích thước quảng cáo'],
+    tags: ['Quảng cáo', 'Sản phẩm', 'Commercial', 'CTA', 'Paid Ads']
+  }
+];
+
+function getEmbedUrl(url) {
+  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  if (yt) return 'https://www.youtube.com/embed/' + yt[1] + '?autoplay=1&rel=0';
+  const drive = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+  if (drive) return 'https://drive.google.com/file/d/' + drive[1] + '/preview';
+  return url;
+}
+
+function getThumb(v) {
+  const yt = v.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  if (yt) return 'https://img.youtube.com/vi/' + yt[1] + '/mqdefault.jpg';
+  return '';
+}
+
+
+const CARD_THEME = {
+  hoathinh: {
+    bg: 'linear-gradient(135deg, #6C3FE8 0%, #B06FFF 100%)',
+    icon: '🎨',
+    label: 'Hoạt hình AI'
+  },
+  podcast: {
+    bg: 'linear-gradient(135deg, #1A6EFF 0%, #00C2FF 100%)',
+    icon: '🎙️',
+    label: 'Podcast / Giáo dục'
+  },
+  teaser: {
+    bg: 'linear-gradient(135deg, #FF6B1A 0%, #FFB800 100%)',
+    icon: '⚡',
+    label: 'Teaser'
+  },
+  short: {
+    bg: 'linear-gradient(135deg, #FF6B9D 0%, #FF9BBD 100%)',
+    icon: '✨',
+    label: 'Short'
+  },
+  quangcao: {
+    bg: 'linear-gradient(135deg, #0D9F6E 0%, #39D98A 100%)',
+    icon: '🎯',
+    label: 'Quảng cáo'
+  }
+};
+
+let activeFilter = 'all';
+
+function renderGrid() {
+  const grid = document.getElementById('video-grid');
+  const filtered = activeFilter === 'all' ? VIDEOS : VIDEOS.filter(v => v.cat === activeFilter);
+  grid.innerHTML = filtered.map((v, i) => {
+    const globalIdx = VIDEOS.indexOf(v);
+    const thumb = getThumb(v);
+    const thumbHtml = thumb
+      ? `<img src="${thumb}" alt="${v.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      : '';
+    const placeholderStyle = thumb ? 'display:none' : '';
+    return `<div class="video-card" onclick="handleCard(${globalIdx})">
+      <div class="thumb-wrap">
+        ${thumbHtml}
+        <div class="thumb-placeholder" style="${placeholderStyle}background:${CARD_THEME[v.cat].bg}">
+          <div class="ph-icon">${CARD_THEME[v.cat].icon}</div>
+          <div class="ph-dots"><div class="ph-dot"></div><div class="ph-dot"></div><div class="ph-dot"></div></div>
+          <div class="ph-label">${CARD_THEME[v.cat].label}</div>
+          <div class="ph-title">${v.title}</div>
+        </div>
+        <div class="play-overlay">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+        ${v.external ? `<div class="external-badge">${v.externalLabel}</div>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-badge">${CAT[v.cat]}</div>
+        <div class="card-title">${v.title}</div>
+        ${v.desc ? `<div class="card-desc">${v.desc}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function handleCard(idx) {
+  const v = VIDEOS[idx];
+  if (v.external) {
+    window.open(v.url, '_blank');
+    return;
+  }
+  openLightbox(idx);
+}
+
+function openLightbox(idx) {
+  const v = VIDEOS[idx];
+  document.getElementById('lb-iframe').src = getEmbedUrl(v.url);
+  document.getElementById('lb-badge').textContent = CAT[v.cat];
+  document.getElementById('lb-title').textContent = v.title;
+  document.getElementById('lb-message').textContent = v.message || '';
+
+  // Render process steps
+  const stepsEl = document.getElementById('lb-process-steps');
+  if (v.process && v.process.length) {
+    stepsEl.innerHTML = v.process.map((s, i) =>
+      '<span class="lb-step"><span class="lb-step-dot">' + (i+1) + '</span>' + s + '</span>' +
+      (i < v.process.length - 1 ? '<span class="lb-step-arrow">›</span>' : '')
+    ).join('');
+    document.getElementById('lb-process-wrap').style.display = 'block';
+  } else {
+    document.getElementById('lb-process-wrap').style.display = 'none';
+  }
+
+  // Render tags
+  const tagsEl = document.getElementById('lb-tags');
+  tagsEl.innerHTML = (v.tags || []).map(t => '<span class="lb-tag">' + t + '</span>').join('');
+
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lb-iframe').src = '';
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    activeFilter = this.dataset.cat;
+    renderGrid();
+  });
+});
+
+renderGrid();
+</script>
+</body>
+</html>
