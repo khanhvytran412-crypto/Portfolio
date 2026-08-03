@@ -296,7 +296,7 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
 </nav>
 
 <!-- HERO -->
-<section class="hero bg-white">
+<section class="hero bg-blue">
   <div class="wrap hero-grid">
     <!-- [ẢNH] Ô trống cho ảnh chân dung dọc (~3:4). Gắn ảnh: <div class="hero-portrait"><img src="chan-dung.jpg" alt="Khanh Vy"></div> -->
     <div class="img-zone hero-portrait"></div>
@@ -309,7 +309,7 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
 </section>
 
 <!-- ABOUT (trang 2: chữ 1 bên · ô ảnh trống 1 bên) -->
-<section class="section bg-blue" id="about">
+<section class="section bg-white" id="about">
   <div class="wrap about-grid">
     <div class="about-inner">
       <h2 class="display">About Me</h2>
@@ -340,18 +340,19 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
 <div id="video-sections"></div>
 
 <!-- SERVICES -->
-<section class="section bg-blue services">
+<section class="section bg-lime services">
   <div class="wrap">
     <h2 class="display">Mình làm được<br>gì cho bạn</h2>
     <div class="service-card">
       <p><b>Tạo nội dung tăng chuyển đổi</b>, không phải đăng cho có.</p>
-      <p>Edit theo đúng style thương hiệu và định hướng kênh. Kết hợp cùng team marketing lên plan content, làm video chất lượng — từ ý tưởng, kịch bản đến thành phẩm.</p>
+      <p>Mình không chỉ cắt ghép mà kể câu chuyện bằng hình ảnh — edit theo đúng style thương hiệu và định hướng kênh, để giữ chân người xem và thúc đẩy hành động.</p>
+      <p>Từ long-form giáo dục, short-form bắt trend đến storytelling thương hiệu, affiliate và quảng cáo — mình phối hợp cùng team marketing lên plan content và làm trọn gói: từ ý tưởng, kịch bản, giọng đọc đến dựng và thành phẩm.</p>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section class="section bg-white contact" id="contact">
+<section class="section bg-blue contact" id="contact">
   <div class="wrap">
     <h2 class="display">Contact for work</h2>
     <div class="contact-grid">
@@ -502,7 +503,7 @@ document.getElementById('skills-list').innerHTML = SKILLS.map(s =>
      <div class="bar"><i style="width:${s.pct}%"></i></div>
    </div>`).join('');
 
-/* render video sections — video phát inline ngay trên trang */
+/* render video sections — ảnh thumbnail gọn, bấm phát inline (không popup) */
 function cardHtml(v) {
   const thumb = getThumb(v);
   const o = orient(v);
@@ -511,12 +512,11 @@ function cardHtml(v) {
     ? `<img src="${thumb}" alt="${v.title}" loading="lazy" referrerpolicy="no-referrer">`
     : `<div class="ph" style="background:linear-gradient(135deg,#12151b,#3a4048)"><div class="ph-title">${v.title}</div></div>`;
   return `<div class="vcard">
-    <div class="vthumb ${o}" data-embed="${embed}">
+    <div class="vthumb ${o}" data-embed="${embed}" onclick="playInline(this)">
       ${poster}
       ${v.lang ? `<span class="vlang">${v.lang}</span>` : ''}
       <div class="vplay"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
     </div>
-    <div class="vmeta"><div class="vtitle">${v.title}</div></div>
   </div>`;
 }
 
@@ -538,16 +538,12 @@ document.getElementById('video-sections').innerHTML = SECTIONS.map((sec, i) => {
   </section>`;
 }).join('');
 
-/* Tự nhúng player khi video lướt vào màn hình (không cần bấm mở popup) */
-const videoObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const box = e.target;
-    videoObserver.unobserve(box);
-    box.innerHTML = '<iframe src="' + box.dataset.embed + '" allow="autoplay; encrypted-media; fullscreen" allowfullscreen loading="lazy"></iframe>';
-  });
-}, { rootMargin: '150px 0px' });
-document.querySelectorAll('.vthumb[data-embed]').forEach(el => videoObserver.observe(el));
+/* Bấm vào video → phát ngay tại chỗ (thay thumbnail bằng player, không mở popup) */
+function playInline(box) {
+  if (box.dataset.playing) return;
+  box.dataset.playing = '1';
+  box.innerHTML = '<iframe src="' + box.dataset.embed + '" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+}
 
 /* lightbox */
 function handleCard(idx) { openLightbox(idx); }
