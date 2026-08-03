@@ -131,7 +131,8 @@ nav {
 .vthumb iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 /* blank image zones (để trống cho bạn tự gắn hình) */
-.img-zone { background: rgba(18,21,27,0.05); border-radius: 6px; }
+.img-zone { background: rgba(18,21,27,0.05); border-radius: 6px; overflow: hidden; }
+.img-zone > img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
 .about-photo { aspect-ratio: 4/5; }
 .vthumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -298,8 +299,11 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
 <!-- HERO -->
 <section class="hero bg-blue">
   <div class="wrap hero-grid">
-    <!-- [ẢNH] Ô trống cho ảnh chân dung dọc (~3:4). Gắn ảnh: <div class="hero-portrait"><img src="chan-dung.jpg" alt="Khanh Vy"></div> -->
-    <div class="img-zone hero-portrait"></div>
+    <!-- [ẢNH 1] Ảnh chân dung. Để đổi ảnh: thay file "hero.jpg" trong cùng thư mục.
+         Chỉnh vị trí/cắt: sửa object-fit (cover=lấp đầy, contain=hiện trọn) & object-position (vd: "center 20%"). -->
+    <div class="img-zone hero-portrait">
+      <img src="hero.jpg" alt="Khanh Vy" style="object-fit:cover; object-position:center;" onerror="this.style.display='none'">
+    </div>
     <div class="hero-title">
       <div class="sparkle">✦</div>
       <h1 class="serif">Portfolio<br>Editor</h1>
@@ -313,11 +317,15 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
   <div class="wrap about-grid">
     <div class="about-inner">
       <h2 class="display">About Me</h2>
-      <p>Xin chào, mình là <b>Khanh Vy</b> — một Freelance Video Editor. Mình không chỉ dựng video đơn thuần mà kể câu chuyện bằng hình ảnh.</p>
-      <p>Mục tiêu của mình là tạo ra những sản phẩm có giá trị, biến nội dung video thành công cụ giúp thương hiệu tăng độ nhận diện, giữ chân người xem và thúc đẩy hành động — chứ không chỉ là một sản phẩm “đẹp để xem”.</p>
+      <p>Xin chào, mình là <b>Khanh Vy</b> — một Freelance Video Editor với hơn 2 năm kinh nghiệm trong mảng content giáo dục, thương hiệu và short-form sáng tạo. Mình không chỉ dựng video đơn thuần mà kể câu chuyện bằng hình ảnh.</p>
+      <p>Từ podcast, video chia sẻ kiến thức đến teaser, storytelling thương hiệu và quảng cáo — mình tập trung vào từng khung hình để đảm bảo video truyền đúng cảm xúc và thông điệp bạn muốn.</p>
+      <p>Với mình, mỗi video là một công cụ giúp thương hiệu tăng độ nhận diện, giữ chân người xem và thúc đẩy hành động — chứ không chỉ là một sản phẩm “đẹp để xem”.</p>
     </div>
-    <!-- [ẢNH] Ô trống cho ảnh của bạn (~4:5). Gắn ảnh: <div class="about-photo"><img src="anh.jpg" alt=""></div> -->
-    <div class="img-zone about-photo"></div>
+    <!-- [ẢNH 2] Ảnh cắt nền cạnh About. Để đổi ảnh: thay file "about.png" trong cùng thư mục.
+         Chỉnh vị trí/cắt: sửa object-fit & object-position bên dưới. -->
+    <div class="img-zone about-photo">
+      <img src="about.png" alt="Khanh Vy" style="object-fit:cover; object-position:center;" onerror="this.style.display='none'">
+    </div>
   </div>
 </section>
 
@@ -356,8 +364,11 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
   <div class="wrap">
     <h2 class="display">Contact for work</h2>
     <div class="contact-grid">
-      <!-- [ẢNH] Ô trống cho ảnh cắt nền (PNG, ~4:5). Gắn ảnh: <div class="cutout"><img src="anh-cat-nen.png" alt=""></div> -->
-      <div class="img-zone cutout"></div>
+      <!-- [ẢNH 3] Ảnh cắt nền ở Contact. Để đổi ảnh: thay file "contact.png" trong cùng thư mục.
+           Ảnh cắt nền nên để object-fit:contain (hiện trọn người, không cắt). -->
+      <div class="img-zone cutout">
+        <img src="contact.png" alt="Khanh Vy" style="object-fit:contain; object-position:center bottom;" onerror="this.style.display='none'">
+      </div>
       <div class="contact-card">
         <div class="contact-line"><b>SĐT / Zalo:</b> 0365378921</div>
         <div class="contact-line"><b>Email:</b> khanhvytran412@gmail.com</div>
@@ -412,8 +423,9 @@ const SKILLS = [
 
 /* ---------- VIDEO DATA ---------- */
 const CAT = {
-  'long-en': 'Long-form',
-  'short': 'Short-form',
+  'podcast': 'Podcast',
+  'knowledge': 'Chia sẻ kiến thức',
+  'event': 'Quảng cáo sự kiện',
   'teaser': 'Teaser',
   'meme': 'Meme',
   'brand': 'Thương hiệu',
@@ -422,10 +434,10 @@ const CAT = {
 };
 /* thứ tự + tiêu đề serif cho từng section video */
 const SECTIONS = [
-  { cat: 'long-en',   title: 'video long-form',            sub: 'Kênh tiếng Anh · leadership & phát triển bản thân' },
-  { cat: 'short',     title: 'video short-form',           sub: 'Short-form · hook mạnh, nhịp nhanh' },
-  { cat: 'teaser',    title: 'video teaser',               sub: 'Teaser ngắn tạo tò mò' },
-  { cat: 'meme',      title: 'video meme',                 sub: 'Nội dung giải trí, bắt trend' },
+  { cat: 'podcast',   title: 'video podcast',              sub: 'Podcast dài, edit sạch, giữ mạch câu chuyện' },
+  { cat: 'knowledge', title: 'video chia sẻ kiến thức',    sub: 'Nội dung giáo dục, dễ hiểu, giữ chân người xem' },
+  { cat: 'event',     title: 'video quảng cáo sự kiện',    sub: 'Nhịp nhanh, cảm xúc, lan tỏa cho sự kiện' },
+  { cats: ['teaser','meme'], title: 'video teaser & meme', sub: 'Teaser tạo tò mò · meme bắt trend, tăng tương tác' },
   { cat: 'brand',     title: 'video kể chuyện thương hiệu', sub: 'Trọn gói kịch bản · voice · edit — Đồ Gỗ Văn Ngưu' },
   { cat: 'affiliate', title: 'video affiliate',            sub: 'Review & bán hàng, tối ưu chuyển đổi' },
   { cat: 'ad',        title: 'video quảng cáo',            sub: 'Video quảng cáo sản phẩm' }
@@ -441,15 +453,18 @@ const PROC = {
 };
 
 const VIDEOS = [
-  /* ===== LONG-FORM (16:9) ===== */
-  { title: 'The #1 Secret To Raising A Leader', cat: 'long-en', lang: 'EN', url: 'https://drive.google.com/file/d/1A5_tu3jKRvmEdvJD_IUmnWnVQzqEe9j8/view', message: 'Chủ đề leadership và cách sống đúng với chính mình. Mình dựng theo cấu trúc mở đầu — luận điểm — chốt hành động, kết hợp caption và đồ họa nhấn ý để người xem nhớ được thông điệp chính.', process: PROC.long, tags: ['Leadership','Long-form','Education','Caption'] },
-  { title: 'The Real Secret To Raising A Creative Child', cat: 'long-en', lang: 'EN', url: 'https://drive.google.com/file/d/1IR7LbxjqUxrgUT_m_Yr20u5G46YAJt_h/view', message: 'Một chủ đề nuôi dạy con sáng tạo được kể theo mạch dài. Với long-form, thử thách lớn nhất là giữ người xem đến cuối — mình xử lý bằng nhịp thở hợp lý, b-roll đúng lúc và caption rõ để khán giả nước ngoài theo dõi trọn vẹn.', process: PROC.long, tags: ['Long-form','Parenting','Education','Caption','B-roll'] },
-  { title: "Artisan Mentor Warns: Don't Only Chase Money", cat: 'long-en', lang: 'EN', url: 'https://drive.google.com/file/d/1KHkIdtwsl5vE0WhdwyaTXlrOqBIaDepS/view', message: 'Video mang tính chiêm nghiệm về nghề và giá trị sống. Mình cắt gọn để giữ mạch tư duy, nhấn vào những câu quote đắt và dựng hình ảnh minh họa cảm xúc, giúp nội dung sâu vẫn dễ theo dõi.', process: PROC.long, tags: ['Long-form','Mindset','Storytelling','Quote','Emotion'] },
+  /* ===== PODCAST (16:9) ===== */
+  { title: 'Podcast — tập 1', cat: 'podcast', lang: 'VI', url: 'https://drive.google.com/file/d/1i9h7rltqcPJ2grifCHM0FQii1IMptma7/view', message: 'Video podcast dài — thử thách lớn nhất là giữ người nghe ở lại đến cuối. Mình edit sạch tiếng, giữ mạch câu chuyện, chèn b-roll và caption đúng lúc để nội dung không bị "phẳng".', process: PROC.long, tags: ['Podcast','Long-form','Edit sạch','Caption','B-roll'] },
+  { title: 'Podcast — tập 2', cat: 'podcast', lang: 'VI', url: 'https://drive.google.com/file/d/1k5tJ8bkFb1sEaTp41kBSdBGVBiH0dB7I/view', message: 'Một tập podcast trọn vẹn — từ mở đầu thu hút đến kết có điểm nhấn. Mình xử lý âm thanh, nhịp cắt và hình ảnh để người nghe vừa dễ theo dõi vừa muốn nghe hết.', process: PROC.long, tags: ['Podcast','Long-form','Âm thanh','Storytelling'] },
 
-  /* ===== SHORT-FORM (9:16) ===== */
-  { title: 'Yêu chính mình trước khi phụ thuộc người khác', cat: 'short', lang: 'VI', url: 'https://drive.google.com/file/d/1PLcpzvG-1fAslX7cu0LLTkt5EL5xq2Xj/view', message: 'Short tiếng Việt về giá trị bản thân trong các mối quan hệ. Mình chọn câu nói chạm cảm xúc làm hook, caption nhịp theo lời và nhạc nền hợp mood để giữ người xem đến cuối.', process: PROC.short, tags: ['Short-form','Tự yêu bản thân','Cảm xúc','Caption'] },
-  { title: 'Reels sáng tạo', cat: 'short', lang: 'VI', url: 'https://drive.google.com/file/d/1f3DKPs_rRKwpu-71MpP5Z9lNs3-Mhxp5/view', message: 'Một short-form dựng theo hướng nhịp nhanh, bắt mắt cho Reels. Mình tập trung vào hook mở đầu, cắt nhịp theo nhạc và caption động để giữ người xem lướt tới cuối.', process: PROC.short, tags: ['Short-form','Reels','Hook','Caption'] },
-  { title: 'Dating with NhiLe', cat: 'short', lang: 'VI', url: 'https://drive.google.com/file/d/14lxumlLkeD2NgLmF3VfJAXxGLvLhQmD3/view', message: 'Short-form thuộc series Dating with NhiLe. Mình dựng theo hướng gần gũi, đời thường, giữ được sự tự nhiên của nhân vật và nhịp cắt đủ nhanh để hợp gu người xem mạng xã hội.', process: PROC.short, tags: ['Short-form','Dating with NhiLe','Đời thường','Reels'] },
+  /* ===== CHIA SẺ KIẾN THỨC (16:9) ===== */
+  { title: 'Video chia sẻ kiến thức', cat: 'knowledge', lang: 'VI', url: 'https://drive.google.com/file/d/1kpnAIKeGeet9LcOCs6npO8LlhFgYZ9Qd/view', message: 'Nội dung giáo dục không nhất thiết phải khô khan — cách edit quyết định người xem có ở lại đến cuối hay không. Mình chia đoạn rõ ràng, nhấn ý bằng đồ họa và caption để kiến thức dễ tiếp thu.', process: PROC.long, tags: ['Giáo dục','Chia sẻ kiến thức','Đồ họa','Caption'] },
+  { title: 'The #1 Secret To Raising A Leader', cat: 'knowledge', lang: 'EN', url: 'https://drive.google.com/file/d/14swQuMAATFp1jLblabk5-vwl-1qEYrIf/view', message: 'Nội dung chia sẻ kiến thức về leadership (tiếng Anh). Mình dựng theo cấu trúc mở đầu — luận điểm — chốt hành động, kết hợp caption và đồ họa nhấn ý để người xem nhớ được thông điệp chính.', process: PROC.long, tags: ['Leadership','Chia sẻ kiến thức','Education','Caption'] },
+
+  /* ===== QUẢNG CÁO SỰ KIỆN (9:16) ===== */
+  { title: 'Yêu chính mình trước khi phụ thuộc người khác', cat: 'event', lang: 'VI', url: 'https://drive.google.com/file/d/1PLcpzvG-1fAslX7cu0LLTkt5EL5xq2Xj/view', message: 'Short tiếng Việt về giá trị bản thân trong các mối quan hệ. Mình chọn câu nói chạm cảm xúc làm hook, caption nhịp theo lời và nhạc nền hợp mood để giữ người xem đến cuối.', process: PROC.short, tags: ['Sự kiện','Cảm xúc','Hook','Caption'] },
+  { title: 'Reels sáng tạo', cat: 'event', lang: 'VI', url: 'https://drive.google.com/file/d/1f3DKPs_rRKwpu-71MpP5Z9lNs3-Mhxp5/view', message: 'Một video dựng theo hướng nhịp nhanh, bắt mắt. Mình tập trung vào hook mở đầu, cắt nhịp theo nhạc và caption động để giữ người xem lướt tới cuối.', process: PROC.short, tags: ['Sự kiện','Reels','Hook','Caption'] },
+  { title: 'Dating with NhiLe', cat: 'event', lang: 'VI', url: 'https://drive.google.com/file/d/14lxumlLkeD2NgLmF3VfJAXxGLvLhQmD3/view', message: 'Video thuộc series Dating with NhiLe. Mình dựng theo hướng gần gũi, đời thường, giữ được sự tự nhiên của nhân vật và nhịp cắt đủ nhanh để hợp gu người xem mạng xã hội.', process: PROC.short, tags: ['Sự kiện','Dating with NhiLe','Đời thường','Reels'] },
 
   /* ===== MEME (9:16) ===== */
   { title: 'Meme — Dating with NhiLe', cat: 'meme', lang: 'VI', url: 'https://drive.google.com/file/d/1LJVzzYia3nE82D9KuXhR34gqLQCzqtF7/view', message: 'Video meme bắt trend, dựng để tạo tiếng cười và tăng tương tác. Mình canh timing punchline thật chuẩn, thêm text/hiệu ứng đúng nhịp để cú "chốt" hài duyên và dễ share.', process: PROC.short, tags: ['Meme','Giải trí','Bắt trend','Timing'] },
@@ -461,10 +476,8 @@ const VIDEOS = [
   { title: 'Ngày giỗ có cần phải buồn mới được không?', cat: 'brand', lang: 'TikTok', thumb: '1hUCW7ZynMgOhob5jGmzR4ld3YJ-3EJLP', url: 'https://www.tiktok.com/@dogovannguu/video/7662584306363206919', message: 'Trọn gói kịch bản + voice + edit. Mình chọn một góc nhìn cảm xúc, đời thường về ngày giỗ để chạm tới người xem, rồi khéo léo lồng ghép giá trị thương hiệu — nội dung "chạm" trước, bán hàng sau.', process: PROC.story, tags: ['Kịch bản','Voice','Edit','Cảm xúc','TikTok'] },
 
   /* ===== AFFILIATE (9:16) ===== */
-  { title: 'Affiliate #20', cat: 'affiliate', lang: 'VI', url: 'https://drive.google.com/file/d/1YlY4ejAxVQzdFl2J0WiCFvY3HflC5T9L/view', message: 'Video affiliate cần bán được hàng chứ không chỉ đẹp. Mình mở bằng hook chạm đúng nhu cầu, khoe điểm nổi bật của sản phẩm bằng hình ảnh rõ ràng và chốt bằng CTA mua hàng đúng thời điểm.', process: PROC.affiliate, tags: ['Affiliate','Review sản phẩm','CTA','Conversion','Short-form'] },
   { title: 'Affiliate #21', cat: 'affiliate', lang: 'VI', url: 'https://drive.google.com/file/d/1WFvWcbHMreViGrN1dBx69Wh-sM9AjWSk/view', message: 'Mỗi giây trong video affiliate đều hướng tới một mục tiêu: giữ người xem đến lúc chốt đơn. Mình cắt nhịp nhanh, làm nổi bật lợi ích sản phẩm và caption dễ đọc để xem không tiếng vẫn hiểu.', process: PROC.affiliate, tags: ['Affiliate','Sản phẩm','Hook','Caption','CTA'] },
   { title: 'Affiliate #22', cat: 'affiliate', lang: 'VI', url: 'https://drive.google.com/file/d/1wryJ5J1KusN7foywejol30k2TesqcO1l/view', message: 'Người xem lướt rất nhanh, nên affiliate phải "bắt" họ ngay từ khung hình đầu. Mình tập trung vào visual hook, demo sản phẩm trực quan và nhịp dựng đủ nhanh để không bị bỏ qua.', process: PROC.affiliate, tags: ['Affiliate','Visual Hook','Demo','Conversion'] },
-  { title: 'Affiliate #23', cat: 'affiliate', lang: 'VI', url: 'https://drive.google.com/file/d/1lIjRgRCtCkTH87A62tIIebDJAd62Y9AL/view', message: 'Một video affiliate tốt là sự cân bằng giữa thông tin và cảm xúc. Mình trình bày lợi ích sản phẩm rõ ràng nhưng vẫn giữ tiết tấu cuốn, để người xem vừa tin vừa muốn mua ngay.', process: PROC.affiliate, tags: ['Affiliate','Review sản phẩm','Storytelling','CTA'] },
   { title: 'Affiliate #24', cat: 'affiliate', lang: 'VI', url: 'https://drive.google.com/file/d/1sQM-qYBFL5UEIuRblbH_SNpUNKAgDdS-/view', message: 'Chốt đơn nằm ở lời kêu gọi hành động. Mình dựng phần CTA thật rõ và hấp dẫn, kết hợp caption và đồ họa nhấn giá trị/ưu đãi để đẩy người xem tới bước mua hàng.', process: PROC.affiliate, tags: ['Affiliate','CTA','Ưu đãi','Conversion','Short-form'] },
 
   /* ===== QUẢNG CÁO (9:16) ===== */
@@ -492,8 +505,9 @@ function getThumb(v) {
   return '';
 }
 /* orient(): 'h' = ngang 16:9, 'v' = dọc 9:16 */
+const HORIZONTAL_CATS = ['podcast', 'knowledge'];
 function orient(v) {
-  return v.cat === 'long-en' ? 'h' : 'v';
+  return HORIZONTAL_CATS.includes(v.cat) ? 'h' : 'v';
 }
 
 /* render skills */
@@ -521,7 +535,8 @@ function cardHtml(v) {
 }
 
 document.getElementById('video-sections').innerHTML = SECTIONS.map((sec, i) => {
-  const list = VIDEOS.filter(v => v.cat === sec.cat);
+  const cats = sec.cats || [sec.cat];
+  const list = VIDEOS.filter(v => cats.includes(v.cat));
   if (!list.length) return '';
   const horiz = list.filter(v => orient(v) === 'h');
   const vert  = list.filter(v => orient(v) === 'v');
