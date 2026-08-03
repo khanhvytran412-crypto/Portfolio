@@ -134,7 +134,7 @@ nav {
 .img-zone { background: rgba(18,21,27,0.05); border-radius: 6px; overflow: hidden; }
 .img-zone > img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
-.about-photo { aspect-ratio: 4/5; }
+.about-photo { aspect-ratio: 4/5; background: transparent; }
 .vthumb img { width: 100%; height: 100%; object-fit: cover; }
 .vthumb .ph {
   position: absolute; inset: 0; display: flex; flex-direction: column;
@@ -317,14 +317,14 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
   <div class="wrap about-grid">
     <div class="about-inner">
       <h2 class="display">About Me</h2>
-      <p>Xin chào, mình là <b>Khanh Vy</b> — một Freelance Video Editor với hơn 2 năm kinh nghiệm trong mảng content giáo dục, thương hiệu và short-form sáng tạo. Mình không chỉ dựng video đơn thuần mà kể câu chuyện bằng hình ảnh.</p>
+      <p>Xin chào, mình là <b>Khanh Vy</b> — một Freelance Video Editor với hơn 1 năm kinh nghiệm trong mảng content giáo dục, thương hiệu và short-form sáng tạo. Mình không chỉ dựng video đơn thuần mà kể câu chuyện bằng hình ảnh.</p>
       <p>Từ podcast, video chia sẻ kiến thức đến teaser, storytelling thương hiệu và quảng cáo — mình tập trung vào từng khung hình để đảm bảo video truyền đúng cảm xúc và thông điệp bạn muốn.</p>
       <p>Với mình, mỗi video là một công cụ giúp thương hiệu tăng độ nhận diện, giữ chân người xem và thúc đẩy hành động — chứ không chỉ là một sản phẩm “đẹp để xem”.</p>
     </div>
     <!-- [ẢNH 2] Ảnh cắt nền cạnh About. Để đổi ảnh: thay file "about.png" trong cùng thư mục.
          Chỉnh vị trí/cắt: sửa object-fit & object-position bên dưới. -->
     <div class="img-zone about-photo">
-      <img src="about.png" alt="Khanh Vy" style="object-fit:cover; object-position:center 20%;" onerror="this.style.display='none'">
+      <img src="about.png" alt="Khanh Vy" style="object-fit:contain; object-position:center;" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -475,7 +475,6 @@ const VIDEOS = [
 
   /* ===== THƯƠNG HIỆU (9:16) ===== */
   { title: 'Ông bà mất rồi, có cần làm đẹp nơi thờ không?', cat: 'brand', lang: 'VI', url: 'https://drive.google.com/file/d/1gKD6H6gVFoc-y-0BWUb2twW1QveXB0Mf/view', message: 'Video thương hiệu cho Đồ Gỗ Văn Ngưu, khai thác chiều sâu văn hóa thờ cúng của người Việt. Mình dựng theo hướng kể chuyện có cảm xúc, để thương hiệu kết nối với khách hàng bằng giá trị chứ không chỉ bán sản phẩm.', process: PROC.brand, tags: ['Thương hiệu','Văn hóa','Storytelling','Cảm xúc','TikTok'] },
-  { title: 'Tổ tiên có phân biệt trai gái khi cúng quảy?', cat: 'brand', lang: 'VI', url: 'https://drive.google.com/file/d/1MVVHJe0NvOhWtKkWX0d3svqoD7APSkJ1/view', message: 'Một góc nhìn văn hóa thú vị cho Đồ Gỗ Văn Ngưu. Mình biến câu hỏi đời thường thành nội dung có chiều sâu, dùng nhịp kể và âm thanh gốc để tạo sự gần gũi, chân thật với người xem.', process: PROC.brand, tags: ['Thương hiệu','Văn hóa','Truyền thống','Storytelling'] },
   { title: 'Nhà chưa có phòng thờ riêng thì thiết kế thế nào?', cat: 'brand', lang: 'TikTok', thumb: '1wM0yoockIlYjhGd3sj0SE656sySz6YmG', url: 'https://www.tiktok.com/@dogovannguu/video/7661841865079033105', message: 'Video kể chuyện bán hàng do mình đảm nhận trọn gói — kịch bản, giọng đọc (voice) và edit. Mình biến một câu hỏi thực tế của khách thành nội dung vừa hữu ích vừa dẫn dắt tự nhiên đến sản phẩm của Đồ Gỗ Văn Ngưu.', process: PROC.story, tags: ['Kịch bản','Voice','Edit','TikTok','Thương hiệu'] },
   { title: 'Ngày giỗ có cần phải buồn mới được không?', cat: 'brand', lang: 'TikTok', thumb: '1hUCW7ZynMgOhob5jGmzR4ld3YJ-3EJLP', url: 'https://www.tiktok.com/@dogovannguu/video/7662584306363206919', message: 'Trọn gói kịch bản + voice + edit. Mình chọn một góc nhìn cảm xúc, đời thường về ngày giỗ để chạm tới người xem, rồi khéo léo lồng ghép giá trị thương hiệu — nội dung "chạm" trước, bán hàng sau.', process: PROC.story, tags: ['Kịch bản','Voice','Edit','Cảm xúc','TikTok'] },
 
