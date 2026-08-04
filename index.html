@@ -469,7 +469,7 @@ const VIDEOS = [
   { title: 'Meme — Dating with NhiLe', cat: 'meme', lang: 'VI', url: 'https://drive.google.com/file/d/1LJVzzYia3nE82D9KuXhR34gqLQCzqtF7/view', message: 'Video meme bắt trend, dựng để tạo tiếng cười và tăng tương tác. Mình canh timing punchline thật chuẩn, thêm text/hiệu ứng đúng nhịp để cú "chốt" hài duyên và dễ share.', process: PROC.short, tags: ['Meme','Giải trí','Bắt trend','Timing'] },
 
   /* ===== THƯƠNG HIỆU (9:16) ===== */
-  { title: 'Cuốn thư trong phòng thờ có ý nghĩa gì?', cat: 'brand', lang: 'TikTok', url: 'https://www.tiktok.com/@dogovannguu/video/7655904657780329744', message: 'Video kể chuyện thương hiệu cho Đồ Gỗ Văn Ngưu — mình biến một câu hỏi văn hóa ("cuốn thư trong phòng thờ có ý nghĩa gì?") thành nội dung có chiều sâu, dẫn dắt tự nhiên tới giá trị sản phẩm. Trọn gói kịch bản, giọng đọc và edit.', process: PROC.story, tags: ['Thương hiệu','Văn hóa','Kịch bản','Voice','Edit'] },
+  { title: 'Cuốn thư trong phòng thờ có ý nghĩa gì?', cat: 'brand', lang: 'TikTok', poster: 'cuonthu.jpg', url: 'https://www.tiktok.com/@dogovannguu/video/7655904657780329744', message: 'Video kể chuyện thương hiệu cho Đồ Gỗ Văn Ngưu — mình biến một câu hỏi văn hóa ("cuốn thư trong phòng thờ có ý nghĩa gì?") thành nội dung có chiều sâu, dẫn dắt tự nhiên tới giá trị sản phẩm. Trọn gói kịch bản, giọng đọc và edit.', process: PROC.story, tags: ['Thương hiệu','Văn hóa','Kịch bản','Voice','Edit'] },
   { title: 'Nhà chưa có phòng thờ riêng thì thiết kế thế nào?', cat: 'brand', lang: 'TikTok', thumb: '1wM0yoockIlYjhGd3sj0SE656sySz6YmG', url: 'https://www.tiktok.com/@dogovannguu/video/7661841865079033105', message: 'Video kể chuyện bán hàng do mình đảm nhận trọn gói — kịch bản, giọng đọc (voice) và edit. Mình biến một câu hỏi thực tế của khách thành nội dung vừa hữu ích vừa dẫn dắt tự nhiên đến sản phẩm của Đồ Gỗ Văn Ngưu.', process: PROC.story, tags: ['Kịch bản','Voice','Edit','TikTok','Thương hiệu'] },
   { title: 'Ngày giỗ có cần phải buồn mới được không?', cat: 'brand', lang: 'TikTok', thumb: '1hUCW7ZynMgOhob5jGmzR4ld3YJ-3EJLP', url: 'https://www.tiktok.com/@dogovannguu/video/7662584306363206919', message: 'Trọn gói kịch bản + voice + edit. Mình chọn một góc nhìn cảm xúc, đời thường về ngày giỗ để chạm tới người xem, rồi khéo léo lồng ghép giá trị thương hiệu — nội dung "chạm" trước, bán hàng sau.', process: PROC.story, tags: ['Kịch bản','Voice','Edit','Cảm xúc','TikTok'] },
 
@@ -495,6 +495,7 @@ function getEmbedUrl(url) {
 }
 function isTikTok(url) { return /tiktok\.com\/@[^/]+\/video\/\d+/.test(url); }
 function getThumb(v) {
+  if (v.poster) return v.poster; // ảnh thumbnail dạng file local (vd: 'cuonthu.jpg')
   if (v.thumb) return 'https://drive.google.com/thumbnail?id=' + v.thumb + '&sz=w800';
   const yt = v.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
   if (yt) return 'https://img.youtube.com/vi/' + yt[1] + '/mqdefault.jpg';
