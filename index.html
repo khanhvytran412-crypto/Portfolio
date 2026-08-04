@@ -172,6 +172,7 @@ nav {
 .service-card b { font-weight: 700; }
 
 /* ---------- contact ---------- */
+.contact { overflow: hidden; }
 .contact .display { margin-bottom: 2rem; position: relative; z-index: 2; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; z-index: 1; }
 .cutout { aspect-ratio: 4/5; border-radius: 4px; background: transparent; transform-origin: bottom left; transform: scale(1.32); }
@@ -610,7 +611,7 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
       els.card.style.transform = 'translate(' + state.card.x + 'px,' + state.card.y + 'px)';
       els.heading.style.transform = 'translate(' + state.heading.x + 'px,' + state.heading.y + 'px)';
       var out = document.getElementById('e-out');
-      if (out) out.textContent = valuesText();
+      if (out) out.value = valuesText();
     }
     function valuesText() {
       return 'ẢNH: transform: translate(' + Math.round(state.img.x) + 'px, ' + Math.round(state.img.y) + 'px) scale(' + state.img.scale + ') rotate(' + state.img.rotate + 'deg)\n'
@@ -646,7 +647,8 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
       + '<div style="font-size:12px;color:#9aa;margin-bottom:10px">Kéo <b style="color:#ff8a3d">Ảnh · Box · Chữ</b> để di chuyển.</div>'
       + '<label style="font-size:12px">Zoom ảnh: <span id="e-sv"></span></label><input id="e-scale" type="range" min="0.6" max="2.4" step="0.01" value="' + state.img.scale + '" style="width:100%;margin:4px 0 10px">'
       + '<label style="font-size:12px">Xoay ảnh: <span id="e-rv"></span>°</label><input id="e-rot" type="range" min="-45" max="45" step="0.5" value="' + state.img.rotate + '" style="width:100%;margin:4px 0 10px">'
-      + '<pre id="e-out" style="white-space:pre-wrap;background:#000;color:#8fd;padding:8px;border-radius:8px;font-size:10.5px;margin:0 0 8px;max-height:120px;overflow:auto"></pre>'
+      + '<div style="font-size:11px;color:#9aa;margin-bottom:3px">Giá trị (bôi đen &amp; Ctrl+C, hoặc bấm nút dưới):</div>'
+      + '<textarea id="e-out" readonly style="width:100%;box-sizing:border-box;background:#000;color:#8fd;padding:8px;border:0;border-radius:8px;font-size:10.5px;margin:0 0 8px;height:82px;resize:none"></textarea>'
       + '<button id="e-copy" style="width:100%;padding:9px;border:0;border-radius:8px;background:#e8562f;color:#fff;font-weight:700;cursor:pointer">📋 Sao chép giá trị</button>'
       + '<button id="e-reset" style="width:100%;padding:7px;border:1px solid #444;border-radius:8px;background:transparent;color:#bbb;cursor:pointer;margin-top:6px">↺ Về mặc định</button>';
     document.body.appendChild(panel);
@@ -657,9 +659,13 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
     sEl.addEventListener('input', function (e) { state.img.scale = parseFloat(e.target.value); labels(); apply(); });
     rEl.addEventListener('input', function (e) { state.img.rotate = parseFloat(e.target.value); labels(); apply(); });
     panel.querySelector('#e-copy').addEventListener('click', function () {
-      var t = valuesText(), btn = this;
-      navigator.clipboard.writeText(t).then(function () { btn.textContent = '✓ Đã sao chép — gửi mình nhé!'; setTimeout(function () { btn.textContent = '📋 Sao chép giá trị'; }, 1800); },
-        function () { window.prompt('Sao chép đoạn này gửi mình:', t); });
+      var btn = this, ta = document.getElementById('e-out');
+      ta.focus(); ta.select(); ta.setSelectionRange(0, 99999);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      if (!ok && navigator.clipboard) { try { navigator.clipboard.writeText(ta.value); ok = true; } catch (e) {} }
+      btn.textContent = ok ? '✓ Đã sao chép — gửi mình nhé!' : 'Đã bôi đen — nhấn Ctrl+C';
+      setTimeout(function () { btn.textContent = '📋 Sao chép giá trị'; }, 2400);
     });
     panel.querySelector('#e-reset').addEventListener('click', function () {
       state = { img: { scale: 1.32, rotate: 0, x: 0, y: 0 }, card: { x: 0, y: 0 }, heading: { x: 0, y: 0 } };
