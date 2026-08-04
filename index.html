@@ -172,10 +172,10 @@ nav {
 .service-card b { font-weight: 700; }
 
 /* ---------- contact ---------- */
-.contact { overflow: hidden; }
+.contact { position: relative; overflow: hidden; }
 .contact .display { margin-bottom: 2rem; position: relative; z-index: 2; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; z-index: 1; }
-.cutout { aspect-ratio: 4/5; border-radius: 4px; background: transparent; transform-origin: bottom left; transform: scale(1.32); }
+.cutout { aspect-ratio: 4/5; border-radius: 4px; background: transparent; }
 .contact-card {
   background: linear-gradient(135deg, var(--blue-lo) 0%, var(--lime) 120%);
   border-radius: 20px; padding: 2rem;
@@ -276,6 +276,7 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
   .about-grid { grid-template-columns: 1fr; gap: 1.75rem; }
   .contact-grid { grid-template-columns: 1fr; }
   .cutout { transform: none; }
+  .cutout img { position: static !important; left: auto !important; bottom: auto !important; width: 100% !important; height: 100% !important; }
   .skill-row { grid-template-columns: 150px 1fr; gap: 0.9rem; }
 }
 @media (max-width: 760px) {
@@ -370,7 +371,7 @@ footer .foot-name { font-family: 'Playfair Display', serif; color: #fff; }
       <!-- [ẢNH 3] Ảnh cắt nền ở Contact. Để đổi ảnh: thay file "contact.png" trong cùng thư mục.
            Ảnh cắt nền nên để object-fit:contain (hiện trọn người, không cắt). -->
       <div class="img-zone cutout">
-        <img src="contact.png" alt="Khanh Vy" style="object-fit:contain; object-position:center bottom;" onerror="this.style.display='none'">
+        <img src="contact.png" alt="Khanh Vy" style="position:absolute; left:24px; bottom:0; height:760px; width:auto; object-fit:contain; object-position:center bottom;" onerror="this.style.display='none'">
       </div>
       <div class="contact-card">
         <div class="contact-line"><b>SĐT / Zalo:</b> 0365378921</div>
@@ -590,13 +591,10 @@ document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeL
 /* ===== CHẾ ĐỘ CHỈNH (chỉ bật khi URL có ?edit) — kéo để di chuyển, thanh trượt để zoom/xoay ===== */
 if ((location.search + location.hash).indexOf('edit') !== -1) {
   window.addEventListener('load', function () {
-    var state = {
-      img:     { scale: 1.32, rotate: 0, x: 0, y: 0 },
-      card:    { x: 0, y: 0 },
-      heading: { x: 0, y: 0 }
-    };
+    var DEF = { img: { height: 760, rotate: 0, left: 24, bottom: 0 }, card: { x: 0, y: 0 }, heading: { x: 0, y: 0 } };
+    var state = JSON.parse(JSON.stringify(DEF));
     var els = {
-      img:     document.querySelector('.cutout'),
+      img:     document.querySelector('.cutout img'),
       card:    document.querySelector('.contact-card'),
       heading: document.querySelector('.contact .display')
     };
@@ -606,17 +604,21 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
     document.querySelectorAll('.contact-card a').forEach(function (a) { a.style.pointerEvents = 'none'; });
 
     function apply() {
-      els.img.style.transformOrigin = 'bottom left';
-      els.img.style.transform = 'translate(' + state.img.x + 'px,' + state.img.y + 'px) scale(' + state.img.scale + ') rotate(' + state.img.rotate + 'deg)';
+      els.img.style.width = 'auto';
+      els.img.style.height = state.img.height + 'px';
+      els.img.style.left = state.img.left + 'px';
+      els.img.style.bottom = state.img.bottom + 'px';
+      els.img.style.transformOrigin = 'center bottom';
+      els.img.style.transform = 'rotate(' + state.img.rotate + 'deg)';
       els.card.style.transform = 'translate(' + state.card.x + 'px,' + state.card.y + 'px)';
       els.heading.style.transform = 'translate(' + state.heading.x + 'px,' + state.heading.y + 'px)';
       var out = document.getElementById('e-out');
       if (out) out.value = valuesText();
     }
     function valuesText() {
-      return 'ẢNH: transform: translate(' + Math.round(state.img.x) + 'px, ' + Math.round(state.img.y) + 'px) scale(' + state.img.scale + ') rotate(' + state.img.rotate + 'deg)\n'
-           + 'BOX: transform: translate(' + Math.round(state.card.x) + 'px, ' + Math.round(state.card.y) + 'px)\n'
-           + 'CHỮ: transform: translate(' + Math.round(state.heading.x) + 'px, ' + Math.round(state.heading.y) + 'px)';
+      return 'ẢNH: left:' + Math.round(state.img.left) + 'px; bottom:' + Math.round(state.img.bottom) + 'px; height:' + Math.round(state.img.height) + 'px; rotate:' + state.img.rotate + 'deg\n'
+           + 'BOX: translate(' + Math.round(state.card.x) + 'px, ' + Math.round(state.card.y) + 'px)\n'
+           + 'CHỮ: translate(' + Math.round(state.heading.x) + 'px, ' + Math.round(state.heading.y) + 'px)';
     }
 
     // viền + con trỏ cho biết chỗ kéo được
@@ -627,15 +629,24 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
 
     var drag = null;
     function startDrag(key) {
-      return function (e) { e.preventDefault(); drag = { key: key, sx: e.clientX, sy: e.clientY, ox: state[key].x, oy: state[key].y }; };
+      return function (e) {
+        e.preventDefault();
+        if (key === 'img') drag = { key: key, sx: e.clientX, sy: e.clientY, oa: state.img.left, ob: state.img.bottom };
+        else drag = { key: key, sx: e.clientX, sy: e.clientY, ox: state[key].x, oy: state[key].y };
+      };
     }
     els.img.addEventListener('mousedown', startDrag('img'));
     els.card.addEventListener('mousedown', startDrag('card'));
     els.heading.addEventListener('mousedown', startDrag('heading'));
     window.addEventListener('mousemove', function (e) {
       if (!drag) return;
-      state[drag.key].x = drag.ox + (e.clientX - drag.sx);
-      state[drag.key].y = drag.oy + (e.clientY - drag.sy);
+      if (drag.key === 'img') {
+        state.img.left = drag.oa + (e.clientX - drag.sx);
+        state.img.bottom = drag.ob - (e.clientY - drag.sy);
+      } else {
+        state[drag.key].x = drag.ox + (e.clientX - drag.sx);
+        state[drag.key].y = drag.oy + (e.clientY - drag.sy);
+      }
       apply();
     });
     window.addEventListener('mouseup', function () { drag = null; });
@@ -645,7 +656,7 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
     panel.style.cssText = 'position:fixed;top:12px;right:12px;z-index:99999;background:#12151b;color:#fff;font:13px/1.5 -apple-system,sans-serif;padding:14px;border-radius:12px;width:260px;box-shadow:0 12px 34px rgba(0,0,0,.5)';
     panel.innerHTML = '<div style="font-weight:700;margin-bottom:6px">🎛️ Chế độ chỉnh</div>'
       + '<div style="font-size:12px;color:#9aa;margin-bottom:10px">Kéo <b style="color:#ff8a3d">Ảnh · Box · Chữ</b> để di chuyển.</div>'
-      + '<label style="font-size:12px">Zoom ảnh: <span id="e-sv"></span></label><input id="e-scale" type="range" min="0.6" max="2.4" step="0.01" value="' + state.img.scale + '" style="width:100%;margin:4px 0 10px">'
+      + '<label style="font-size:12px">Cỡ ảnh (cao): <span id="e-sv"></span></label><input id="e-scale" type="range" min="400" max="1200" step="5" value="' + state.img.height + '" style="width:100%;margin:4px 0 10px">'
       + '<label style="font-size:12px">Xoay ảnh: <span id="e-rv"></span>°</label><input id="e-rot" type="range" min="-45" max="45" step="0.5" value="' + state.img.rotate + '" style="width:100%;margin:4px 0 10px">'
       + '<div style="font-size:11px;color:#9aa;margin-bottom:3px">Giá trị (bôi đen &amp; Ctrl+C, hoặc bấm nút dưới):</div>'
       + '<textarea id="e-out" readonly style="width:100%;box-sizing:border-box;background:#000;color:#8fd;padding:8px;border:0;border-radius:8px;font-size:10.5px;margin:0 0 8px;height:82px;resize:none"></textarea>'
@@ -655,8 +666,8 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
 
     var sEl = panel.querySelector('#e-scale'), rEl = panel.querySelector('#e-rot');
     var sv = panel.querySelector('#e-sv'), rv = panel.querySelector('#e-rv');
-    function labels() { sv.textContent = state.img.scale.toFixed(2) + '×'; rv.textContent = state.img.rotate; }
-    sEl.addEventListener('input', function (e) { state.img.scale = parseFloat(e.target.value); labels(); apply(); });
+    function labels() { sv.textContent = Math.round(state.img.height) + 'px'; rv.textContent = state.img.rotate; }
+    sEl.addEventListener('input', function (e) { state.img.height = parseFloat(e.target.value); labels(); apply(); });
     rEl.addEventListener('input', function (e) { state.img.rotate = parseFloat(e.target.value); labels(); apply(); });
     panel.querySelector('#e-copy').addEventListener('click', function () {
       var btn = this, ta = document.getElementById('e-out');
@@ -668,8 +679,8 @@ if ((location.search + location.hash).indexOf('edit') !== -1) {
       setTimeout(function () { btn.textContent = '📋 Sao chép giá trị'; }, 2400);
     });
     panel.querySelector('#e-reset').addEventListener('click', function () {
-      state = { img: { scale: 1.32, rotate: 0, x: 0, y: 0 }, card: { x: 0, y: 0 }, heading: { x: 0, y: 0 } };
-      sEl.value = 1.32; rEl.value = 0; labels(); apply();
+      state = JSON.parse(JSON.stringify(DEF));
+      sEl.value = state.img.height; rEl.value = state.img.rotate; labels(); apply();
     });
 
     labels();
